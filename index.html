@@ -1,0 +1,846 @@
+<div id="apv6">
+  <header class="hero">
+    <div class="eyebrow">NEON ARCADE // EST. 2026</div>
+    <h1>ART PROJECT <span>V6</span></h1>
+    <p>YOUR GAMES. YOUR RULES. YOUR ARCADE.</p>
+  </header>
+
+  <section class="controls">
+    <input id="apSearch" type="search" placeholder="⌕  Search games..." autocomplete="off">
+    <select id="apCategory">
+      <option value="All">All games</option>
+      <option value="Multiplayer">Two-player & multiplayer</option>
+      <option value="Sports">Sports</option>
+      <option value="Racing">Racing</option>
+      <option value="Platformer">Platformers</option>
+      <option value="Action">Action</option>
+      <option value="Arcade">Arcade</option>
+      <option value="Puzzle">Puzzle</option>
+      <option value="Casual">Casual</option>
+      <option value="Adventure">Adventure</option>
+    </select>
+  </section>
+
+  <div class="bar">
+    <span class="led"></span>
+    <span id="apCount">LOADING ARCADE...</span>
+    <span class="right">V6 // BLANK-TAB MODE</span>
+  </div>
+
+  <div id="apNotice" role="status"></div>
+  <main id="apGames" class="games"></main>
+
+  <footer>
+    <div class="footer-logo">AP<span>V6</span></div>
+    NEON ARCADE SYSTEM // END OF LINE
+    <p>Some games require a compatible, accessible standalone HTML source.</p>
+  </footer>
+</div>
+
+<style>
+#apv6 {
+  --red:#ff2448;
+  --red2:#a90028;
+  --bg:#08080d;
+  --panel:#12121b;
+  --line:#302632;
+  --text:#f4f4fa;
+  --muted:#aaa8b8;
+  background:var(--bg);
+  color:var(--text);
+  font-family:Arial,Helvetica,sans-serif;
+  padding:clamp(12px,3vw,26px);
+  border:1px solid #39212c;
+  border-radius:12px;
+  min-height:600px;
+  box-sizing:border-box;
+  overflow:hidden;
+}
+#apv6 * {box-sizing:border-box}
+#apv6 .hero {
+  text-align:center;
+  padding:26px 8px 30px;
+  border-bottom:1px solid var(--line);
+  background:radial-gradient(ellipse at top,#42101d55,transparent 70%);
+}
+#apv6 .eyebrow {
+  color:#ff7187;
+  font-size:10px;
+  letter-spacing:4px;
+}
+#apv6 h1 {
+  margin:15px 0 8px;
+  font-size:clamp(28px,6vw,48px);
+  line-height:1.1;
+  font-weight:900;
+  letter-spacing:2px;
+  text-shadow:0 0 20px #ff24482a;
+}
+#apv6 h1 span,#apv6 .footer-logo span {color:var(--red)}
+#apv6 .hero p {
+  color:var(--muted);
+  font-size:10px;
+  letter-spacing:3px;
+  line-height:1.8;
+}
+#apv6 .controls {
+  display:flex;
+  gap:10px;
+  flex-wrap:wrap;
+  margin:22px 0 17px;
+}
+#apv6 input,#apv6 select {
+  background:#14141d;
+  border:1px solid #3b3541;
+  color:white;
+  border-radius:7px;
+  padding:13px;
+  font-size:14px;
+  min-width:0;
+}
+#apv6 input {flex:1}
+#apv6 select {width:220px;max-width:100%}
+#apv6 input:focus,#apv6 select:focus {
+  outline:1px solid var(--red);
+  border-color:var(--red);
+}
+#apv6 .bar {
+  display:flex;
+  align-items:center;
+  gap:9px;
+  flex-wrap:wrap;
+  margin:16px 0;
+  color:#c1bdcc;
+  font-size:10px;
+  letter-spacing:1.3px;
+}
+#apv6 .led {
+  width:8px;height:8px;
+  border-radius:50%;
+  background:var(--red);
+  box-shadow:0 0 10px var(--red);
+}
+#apv6 .right {margin-left:auto;color:#ff778d}
+#apv6 #apNotice {
+  display:none;
+  padding:12px;
+  margin:12px 0;
+  background:#21131a;
+  border:1px solid #7d2339;
+  border-radius:7px;
+  color:#ffd4dc;
+  font-size:12px;
+  line-height:1.6;
+}
+#apv6 .games {
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(145px,1fr));
+  gap:12px;
+}
+#apv6 .game {
+  min-width:0;
+  min-height:148px;
+  padding:14px;
+  display:flex;
+  flex-direction:column;
+  align-items:stretch;
+  background:linear-gradient(145deg,#191923,#101016);
+  border:1px solid #302d3a;
+  border-radius:9px;
+  transition:transform .15s,border-color .15s,box-shadow .15s;
+}
+#apv6 .game:hover {
+  transform:translateY(-3px);
+  border-color:var(--red);
+  box-shadow:0 0 16px #ff24481a;
+}
+#apv6 .tag {
+  font-size:9px;
+  text-transform:uppercase;
+  letter-spacing:1.3px;
+  color:#ff7188;
+  margin-bottom:12px;
+}
+#apv6 .game h3 {
+  margin:0 0 14px;
+  font-size:14px;
+  line-height:1.4;
+  overflow-wrap:anywhere;
+}
+#apv6 .play {
+  margin-top:auto;
+  width:100%;
+  padding:10px 6px;
+  color:white;
+  background:var(--red);
+  border:1px solid var(--red);
+  border-radius:5px;
+  font-weight:800;
+  font-size:10px;
+  letter-spacing:1px;
+  cursor:pointer;
+}
+#apv6 .play:hover {background:#d81436}
+#apv6 .play:disabled {opacity:.65;cursor:wait}
+#apv6 .empty {
+  grid-column:1/-1;
+  padding:35px 10px;
+  text-align:center;
+  color:var(--muted);
+}
+#apv6 footer {
+  text-align:center;
+  color:#777482;
+  font-size:10px;
+  line-height:1.8;
+  letter-spacing:1px;
+  padding:32px 8px 8px;
+}
+#apv6 .footer-logo {
+  font-size:22px;
+  font-weight:900;
+  margin-bottom:8px;
+}
+#apv6 footer p {letter-spacing:0}
+@media(max-width:480px) {
+  #apv6 .games {grid-template-columns:repeat(2,minmax(0,1fr))}
+  #apv6 select {width:100%}
+  #apv6 .right {margin-left:0}
+}
+</style>
+
+<script>
+(function () {
+  const root = document.getElementById("apv6");
+  if (!root || root.dataset.started) return;
+  root.dataset.started = "1";
+
+  /*
+    IMPORTANT:
+    This is a source-file template, not a guarantee that every
+    game has a file at the generated URL. Replace any incorrect
+    source with a tested standalone HTML file URL.
+  */
+  const CDN = "https://cdn.jsdelivr.net/gh/GoatTech-42/NEBULACDN@main";
+  const CATALOG_URLS = [
+    CDN + "/games.json",
+    "https://raw.githubusercontent.com/GoatTech-42/NEBULACDN/main/games.json"
+  ];
+
+  const curatedGames = [
+    // SPORTS
+    {name:"Retro Bowl",category:"Sports",url:"https://retrobowl.dev/",external:true,
+      // Use a known GameMaker HTML5 asset bundle instead of the failing w3technic host.
+      gameScript:"https://cdn.jsdelivr.net/gh/selenite-cc/selenite-old@9c743188888af0986c8c7b293dbac8f9e421a4ee/retrobowl/html5game/RetroBowl.js",
+      gameBase:"https://cdn.jsdelivr.net/gh/selenite-cc/selenite-old@9c743188888af0986c8c7b293dbac8f9e421a4ee/retrobowl/"},
+
+    {name:"ShuttleTV",category:"Arcade",url:"https://shuttletv.su",external:true,blankTab:true,
+      description:"Opens ShuttleTV in a new blank tab. Network restrictions may still block the site."},
+    {name:"Retro Goal",category:"Sports",slug:"retro-goal"},
+    {name:"Basketball Legends",category:"Sports",slug:"basketball-legends-2020"},
+    {name:"Basket Random",category:"Sports",slug:"basket-random"},
+    {name:"Soccer Random",category:"Sports",slug:"soccer-random"},
+    {name:"Volley Random",category:"Sports",slug:"volley-random"},
+    {name:"Dunkers 2",category:"Sports",slug:"dunkers-2"},
+    {name:"Football Masters",category:"Sports",slug:"football-masters"},
+    {name:"1 on 1 Soccer",category:"Sports",slug:"1on1soccer"},
+    {name:"8 Ball Pool",category:"Sports",slug:"8ballpool"},
+    {name:"Basketball Stars",category:"Sports",slug:"basketball-stars"},
+    {name:"4th and Goal",category:"Sports",slug:"4thandgoal"},
+    {name:"Wrestle Bros",category:"Sports",slug:"wrestle-bros"},
+    {name:"Soccer Skills",category:"Sports",slug:"soccer-skills-champions-league"},
+
+    // LOCAL MULTIPLAYER / PARTY
+    {name:"House of Hazards",category:"Multiplayer",slug:"house-of-hazards"},
+    {name:"Getaway Shootout",category:"Multiplayer",slug:"getaway-shootout"},
+    {name:"Rooftop Snipers",category:"Multiplayer",slug:"rooftop-snipers"},
+    {name:"Rooftop Snipers 2",category:"Multiplayer",slug:"rooftop-snipers-2"},
+    {name:"12 MiniBattles",category:"Multiplayer",slug:"12minibattles"},
+    {name:"Drunken Duel",category:"Multiplayer",slug:"drunken-duel"},
+    {name:"Drunken Duel 2",category:"Multiplayer",slug:"drunken-duel-2"},
+    {name:"Stick Duel: Battle",category:"Multiplayer",slug:"stick-duel-battle"},
+    {name:"Stick Duel: Medieval Wars",category:"Multiplayer",slug:"stick-duel-medieval-wars"},
+    {name:"Thumb Fighter",category:"Multiplayer",slug:"thumb-fighter"},
+    {name:"Ping Pong Chaos",category:"Multiplayer",slug:"ping-pong-chaos"},
+    {name:"Gun Mayhem",category:"Multiplayer",slug:"gun-mayhem"},
+    {name:"Gun Mayhem 2",category:"Multiplayer",slug:"gun-mayhem-2"},
+    {name:"Raft Wars",category:"Multiplayer",slug:"raft-wars"},
+    {name:"Raft Wars 2",category:"Multiplayer",slug:"raft-wars-2"},
+    {name:"Money Movers",category:"Multiplayer",slug:"money-movers"},
+    {name:"Money Movers 2",category:"Multiplayer",slug:"money-movers-2"},
+    {name:"Money Movers 3",category:"Multiplayer",slug:"money-movers-3"},
+    {name:"Bad Ice-Cream",category:"Multiplayer",slug:"bad-ice-cream"},
+    {name:"Bad Ice-Cream 2",category:"Multiplayer",slug:"bad-ice-cream-2"},
+    {name:"Bad Ice-Cream 3",category:"Multiplayer",slug:"bad-ice-cream-3"},
+    {name:"Fireboy and Watergirl",category:"Multiplayer",slug:"fireboy-and-watergirl"},
+    {name:"Fireboy and Watergirl 2",category:"Multiplayer",slug:"fireboy-and-watergirl-2"},
+    {name:"Fireboy and Watergirl 3",category:"Multiplayer",slug:"fireboy-and-watergirl-3"},
+    {name:"Fireboy and Watergirl 4",category:"Multiplayer",slug:"fireboy-and-watergirl-4"},
+    {name:"G-Switch 3",category:"Multiplayer",slug:"g-switch-3"},
+    {name:"Tic-Tac-Toe",category:"Multiplayer",slug:"tic-tac-toe"},
+    {name:"Connect Four",category:"Multiplayer",slug:"connect-4"},
+    {name:"Checkers",category:"Multiplayer",slug:"checkers"},
+    {name:"Chess",category:"Multiplayer",slug:"chess"},
+    {name:"Ludo",category:"Multiplayer",slug:"ludo"},
+    {name:"Pong",category:"Multiplayer",slug:"pong"},
+    {name:"Thumb Wars",category:"Multiplayer",slug:"thumb-wars"},
+
+    // RACING
+    {name:"Rocket Goal",category:"Racing",rocketGoalFile:"https://cdn.jsdelivr.net/gh/centerclassroom/mc55@main/gtr.xml",
+      description:"Loads the supplied Rocket Goal game document into a blank tab without an iframe."},
+    {name:"Drift Hunters",category:"Racing",slug:"drift-hunters"},
+    {name:"Snow Rider 3D",category:"Racing",slug:"snow-rider-3d"},
+    {name:"Moto X3M",category:"Racing",slug:"moto-x3m"},
+    {name:"Drive Mad",category:"Racing",slug:"drive-mad"},
+    {name:"Madalin Stunt Cars 2",category:"Racing",slug:"madalin-stunt-cars-2"},
+    {name:"Drift Boss",category:"Racing",slug:"drift-boss"},
+    {name:"Highway Traffic",category:"Racing",slug:"highway-traffic"},
+    {name:"Crazy Cars",category:"Racing",slug:"crazy-cars"},
+
+    // PLATFORMERS
+    {name:"Run 3",category:"Platformer",slug:"run3"},
+    {name:"Vex 3",category:"Platformer",slug:"vex-3"},
+    {name:"Vex 4",category:"Platformer",slug:"vex-4"},
+    {name:"Vex 7",category:"Platformer",slug:"vex-7"},
+    {name:"OvO",category:"Platformer",slug:"ovo"},
+    {name:"Stickman Hook",category:"Platformer",slug:"stickman-hook"},
+    {name:"World's Hardest Game",category:"Platformer",slug:"worlds-hardest-game"},
+    {name:"Fancy Pants Adventure",category:"Platformer",slug:"fancy-pants-adventure"},
+    {name:"Dreadhead Parkour",category:"Platformer",slug:"dreadhead-parkour"},
+
+    // ACTION
+    {name:"1v1.LOL",category:"Action",slug:"1v1lol"},
+    {name:"Gladihoppers",category:"Action",slug:"gladihoppers"},
+    {name:"Age of War",category:"Action",slug:"age-of-war"},
+    {name:"Stickman War",category:"Action",slug:"stickman-war"},
+    {name:"12 MiniBattles",category:"Action",slug:"12minibattles"},
+    {name:"10 Bullets",category:"Action",slug:"10bullets"},
+    {name:"2 Doom",category:"Action",slug:"2doom"},
+    {name:"Strikeforce Kitty",category:"Action",slug:"strikeforce-kitty"},
+
+    // ARCADE
+    {name:"Subway Surfers",category:"Arcade",slug:"subway-surfers"},
+    {name:"Jetpack Joyride",category:"Arcade",slug:"jetpack-joyride"},
+    {name:"Crossy Road",category:"Arcade",slug:"crossy-road"},
+    {name:"Flappy Bird",category:"Arcade",slug:"flappy-bird"},
+    {name:"Doodle Jump",category:"Arcade",slug:"doodle-jump"},
+    {name:"3D Pinball Space Cadet",category:"Arcade",slug:"3dpinballspacecadet"},
+    {name:"60 Seconds Burger Run",category:"Arcade",slug:"60secondsburgerrun"},
+    {name:"Gimme the Airpod",category:"Arcade",slug:"gimme-the-airpod"},
+
+    // PUZZLE AND CASUAL
+    {name:"2048",category:"Puzzle",slug:"2048"},
+    {name:"Bloxorz",category:"Puzzle",slug:"bloxorz"},
+    {name:"40x Escape",category:"Puzzle",slug:"40xescape"},
+    {name:"20 Small Mazes",category:"Puzzle",slug:"20smallmazes"},
+    {name:"3 Slices 2",category:"Puzzle",slug:"3slices2"},
+    {name:"Cookie Clicker",category:"Casual",slug:"cookie-clicker"},
+    {name:"Suika Game",category:"Casual",slug:"suika-game"},
+    {name:"Monkey Mart",category:"Casual",slug:"monkey-mart"},
+
+    // CLASSIC-STYLE POKÉMON
+    {name:"Classic Pokémon-Style Adventure",category:"Adventure",url:"https://fullscreen-shenanigans.github.io/FullScreenPokemon/"}
+  ];
+
+  // The curated list keeps your original categories and card layout.
+  // Catalog entries are added using their REAL file paths, not guessed filenames.
+  let games = curatedGames.slice();
+  let catalogReady = false;
+
+  const list = root.querySelector("#apGames");
+  const search = root.querySelector("#apSearch");
+  const category = root.querySelector("#apCategory");
+  const count = root.querySelector("#apCount");
+  const notice = root.querySelector("#apNotice");
+
+  function getSource(game) {
+    // Catalog file paths are authoritative; do not guess a URL from a slug.
+    if (game.file && typeof game.file === "string") {
+      const file = game.file.replace(/^\/+/, "");
+      if (file.startsWith("games/") && !file.includes("..")) {
+        return CDN + "/" + file.split("/").map(encodeURIComponent).join("/");
+      }
+    }
+    // Explicit URLs are retained for entries that already had one,
+    // but fetching an external website may fail due to CORS or dependencies.
+    if (game.url) return game.url;
+    return null;
+  }
+
+  function normalizeName(value) {
+    return String(value || "").toLowerCase()
+      .replace(/[^a-z0-9]+/g, "");
+  }
+
+  function mappedCategory(game) {
+    const raw = String(game.category || "").toLowerCase();
+    const tags = Array.isArray(game.tags) ? game.tags.join(" ").toLowerCase() : "";
+    const name = String(game.name || "").toLowerCase();
+    if (/multiplayer|2-player|two-player|local co-op|coop/.test(tags) ||
+        /house of hazards|basket random|soccer random|rooftop snipers|getaway shootout|12 minibattles|drunken duel|stick duel|money movers|bad ice-cream|gun mayhem|raft wars|wrestle bros|fireboy and watergirl|ping pong chaos/.test(name)) return "Multiplayer";
+    if (/sport|football|soccer|basketball|volley|baseball|tennis/.test(raw)) return "Sports";
+    if (/racing|race|car|drift|kart/.test(raw)) return "Racing";
+    if (/platformer|mario|sonic|platform/.test(raw)) return "Platformer";
+    if (/puzzle|chess|logic|word/.test(raw)) return "Puzzle";
+    if (/action|shooter|fighting|horror/.test(raw)) return "Action";
+    if (/adventure|rpg|role-playing|strategy|zelda|pokemon/.test(raw)) return "Adventure";
+    if (/casual|clicker|idle/.test(raw)) return "Casual";
+    return "Arcade";
+  }
+
+  async function loadCatalogAndRepairSources() {
+    let lastError = null;
+    for (const catalogURL of CATALOG_URLS) {
+      try {
+        const response = await fetch(catalogURL, {cache:"no-store"});
+        if (!response.ok) throw new Error("HTTP " + response.status);
+        const data = await response.json();
+        if (!data || !Array.isArray(data.games)) throw new Error("Catalog format was not recognized");
+
+        const catalog = data.games.filter(g => g && g.name && typeof g.file === "string");
+        const byName = new Map();
+        const bySlug = new Map();
+        catalog.forEach(g => {
+          byName.set(normalizeName(g.name), g);
+          if (g.slug) bySlug.set(normalizeName(g.slug), g);
+          if (g.id) bySlug.set(normalizeName(g.id), g);
+        });
+
+        const used = new Set();
+        curatedGames.forEach(game => {
+          const match = byName.get(normalizeName(game.name)) ||
+            (game.slug ? bySlug.get(normalizeName(game.slug)) : null);
+          if (match) {
+            game.file = match.file;
+            game.tags = match.tags || [];
+            game.description = match.description || "";
+            used.add(match.file);
+          }
+        });
+
+        // Add up to 300 additional real catalog games to keep the page responsive.
+        let addedCatalogGames = 0;
+        catalog.forEach(game => {
+          if (addedCatalogGames >= 300) return;
+          if (used.has(game.file)) return;
+          const nameKey = normalizeName(game.name);
+          if (games.some(existing => normalizeName(existing.name) === nameKey)) return;
+          const mapped = mappedCategory(game);
+          games.push({
+            name: game.name,
+            category: mapped,
+            slug: game.slug || game.id,
+            file: game.file,
+            tags: game.tags || [],
+            description: game.description || ""
+          });
+          used.add(game.file);
+          addedCatalogGames++;
+        });
+
+        // Add House of Hazards to Multiplayer if the catalog has a matching entry.
+        const house = catalog.find(g => /house of hazards/i.test(g.name) || /house-of-hazards/i.test(g.slug || ""));
+        if (house) {
+          const existing = games.find(g => /house of hazards/i.test(g.name));
+          if (existing) {
+            existing.file = house.file;
+            existing.tags = house.tags || [];
+          }
+        }
+
+        catalogReady = true;
+        const led = root.querySelector(".led");
+        if (led) led.style.background = "#45f59a";
+        render();
+        return;
+      } catch (error) {
+        lastError = error;
+      }
+    }
+
+    showNotice("The extra game catalog could not load. Your original curated cards remain visible. " +
+      (lastError && lastError.message ? lastError.message : ""));
+    render();
+  }
+
+  function render() {
+    const q = search.value.toLowerCase().trim();
+    const cat = category.value;
+    const filtered = games.filter(game =>
+      [game.name, game.category, game.slug, game.description,
+       Array.isArray(game.tags) ? game.tags.join(" ") : ""]
+        .join(" ").toLowerCase().includes(q) &&
+      (cat === "All" || game.category === cat)
+    );
+
+    count.textContent = filtered.length + " GAMES IN THE DATABASE";
+    list.replaceChildren();
+
+    if (!filtered.length) {
+      const empty = document.createElement("div");
+      empty.className = "empty";
+      empty.textContent = "NO GAMES FOUND. TRY ANOTHER SEARCH.";
+      list.appendChild(empty);
+      return;
+    }
+
+    filtered.forEach(game => {
+      const card = document.createElement("article");
+      card.className = "game";
+
+      const tag = document.createElement("div");
+      tag.className = "tag";
+      tag.textContent = game.category;
+
+      const title = document.createElement("h3");
+      title.textContent = game.name;
+
+      const play = document.createElement("button");
+      play.className = "play";
+      play.textContent = "▶  PLAY GAME";
+      play.addEventListener("click", () => launch(game, play));
+
+      card.append(tag, title, play);
+      list.appendChild(card);
+    });
+  }
+
+  // Cache the supplied Rocket Goal game document in IndexedDB for up to 90 days.
+  // No iframe is used: the fetched document is written directly into the about:blank tab.
+  const RG_DB_NAME = "ArtProjectV6GameCache";
+  const RG_STORE_NAME = "GameFiles";
+  const RG_CACHE_DURATION = 90 * 24 * 60 * 60 * 1000;
+
+  function rgOpenDB() {
+    return new Promise((resolve, reject) => {
+      const request = indexedDB.open(RG_DB_NAME, 1);
+      request.onupgradeneeded = () => {
+        const db = request.result;
+        if (!db.objectStoreNames.contains(RG_STORE_NAME)) {
+          db.createObjectStore(RG_STORE_NAME, { keyPath: "url" });
+        }
+      };
+      request.onsuccess = () => resolve(request.result);
+      request.onerror = () => reject(request.error || new Error("IndexedDB unavailable"));
+    });
+  }
+
+  async function rgGetCachedFile(url) {
+    const db = await rgOpenDB();
+    try {
+      const cached = await new Promise((resolve, reject) => {
+        const request = db.transaction(RG_STORE_NAME, "readonly").objectStore(RG_STORE_NAME).get(url);
+        request.onsuccess = () => resolve(request.result || null);
+        request.onerror = () => reject(request.error);
+      });
+      if (cached && Date.now() - cached.timestamp < RG_CACHE_DURATION && typeof cached.content === "string") {
+        return cached.content;
+      }
+      const response = await fetch(url, { cache: "no-store" });
+      if (!response.ok) throw new Error("Game source returned HTTP " + response.status);
+      const content = await response.text();
+      await new Promise((resolve, reject) => {
+        const tx = db.transaction(RG_STORE_NAME, "readwrite");
+        tx.objectStore(RG_STORE_NAME).put({ url, content, timestamp: Date.now() });
+        tx.oncomplete = resolve;
+        tx.onerror = () => reject(tx.error || new Error("Could not cache game file"));
+        tx.onabort = () => reject(tx.error || new Error("Cache transaction aborted"));
+      });
+      return content;
+    } finally {
+      db.close();
+    }
+  }
+
+  async function launch(game, button) {
+    // Rocket Goal: use the provided gtr.xml document directly in a blank tab.
+    // Deliberately no iframe. This only works if the source returns runnable HTML.
+    if (game.rocketGoalFile) {
+      const gameWindow = window.open("about:blank", "_blank");
+      if (!gameWindow) {
+        showNotice("Your browser blocked the new tab. Allow pop-ups for this site, then try again.");
+        return;
+      }
+      const warnScript = '<script>window.addEventListener("beforeunload",function(e){e.preventDefault();e.returnValue="Are you sure you want to close this tab?";});<\/script>';
+      gameWindow.document.open();
+      gameWindow.document.write('<!doctype html><html><head><title>Loading Rocket Goal...</title></head><body style="margin:0;background:#08080d;color:#ff4968;font:16px Arial;display:grid;place-items:center;height:100vh">LOADING ROCKET GOAL...'+warnScript+'</body></html>');
+      gameWindow.document.close();
+      const warnBeforeClose = event => { event.preventDefault(); event.returnValue = "Are you sure you want to close this tab?"; };
+      gameWindow.addEventListener("beforeunload", warnBeforeClose);
+      button.disabled = true;
+      button.textContent = "LOADING...";
+      hideNotice();
+      try {
+        let html = await rgGetCachedFile(game.rocketGoalFile);
+        if (!/<html[\s>]|<!doctype\s+html|<body[\s>]/i.test(html)) {
+          throw new Error("The gtr.xml source did not return a complete runnable HTML document. It may be a game manifest or require a separate loader.");
+        }
+        const baseUrl = new URL(".", game.rocketGoalFile).href;
+        if (/<head\b[^>]*>/i.test(html) && !/<base\b/i.test(html)) {
+          html = html.replace(/<head\b([^>]*)>/i, '<head$1><base href="' + baseUrl + '">');
+        }
+        const antiClose = '<script>window.addEventListener("beforeunload",function(e){e.preventDefault();e.returnValue="Are you sure you want to close this tab?";});<\/script>';
+        if (/<\/body\s*>/i.test(html)) html = html.replace(/<\/body\s*>/i, antiClose + '</body>');
+        else html += antiClose;
+        if (!gameWindow.closed) {
+          gameWindow.document.open();
+          gameWindow.document.write(html);
+          gameWindow.document.close();
+          gameWindow.addEventListener("beforeunload", warnBeforeClose);
+        }
+      } catch (error) {
+        if (!gameWindow.closed) {
+          gameWindow.document.open();
+          gameWindow.document.write('<!doctype html><html><head><title>Rocket Goal unavailable</title><style>body{margin:0;padding:32px;background:#08080d;color:#f5f5f7;font:15px Arial;line-height:1.7}h2{color:#ff2448}code{overflow-wrap:anywhere;color:#ff9aac}</style></head><body><h2>ROCKET GOAL COULD NOT LOAD</h2><p>'+escapeHtml(error.message || "The source could not be loaded.")+'</p><p>Source: <code>'+escapeHtml(game.rocketGoalFile)+'</code></p><p>This launcher uses no iframe. If the source is XML rather than runnable HTML, its original loader or complete game files are required.</p>'+warnScript+'</body></html>');
+          gameWindow.document.close();
+        }
+        showNotice("Rocket Goal failed to load. The source may not be runnable HTML, or the host may block fetching.");
+      } finally {
+        button.disabled = false;
+        button.textContent = "▶  PLAY GAME";
+      }
+      return;
+    }
+
+    const source = getSource(game);
+
+    // Retro Bowl: load its GameMaker HTML5 script into our own fullscreen shell.
+    // The base URL is important because the game loads supporting assets by relative path.
+    // This uses a canvas + script, not an iframe.
+    if (game.gameScript && game.gameBase) {
+      const gameWindow = window.open("about:blank", "_blank");
+      if (!gameWindow) {
+        showNotice("Your browser blocked the new tab. Allow pop-ups for this site, then try again.");
+        return;
+      }
+
+      const safeBase = game.gameBase.replace(/&/g, "&amp;").replace(/"/g, "&quot;");
+      const safeScript = game.gameScript.replace(/&/g, "&amp;").replace(/"/g, "&quot;");
+      gameWindow.document.open();
+      gameWindow.document.write(`<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<base href="${safeBase}">
+<title>Retro Bowl | Art Project V6</title>
+<style>
+*{box-sizing:border-box}
+html,body{width:100%;height:100%;margin:0;overflow:hidden;background:#000}
+body{color:#ccc}
+.gm4html5_div_class{width:100vw;height:100vh;margin:0;padding:0;border:0;position:relative;overflow:hidden}
+#canvas{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:min(100vw,177.7778vh);height:min(100vh,56.25vw);max-width:100vw;max-height:100vh;display:block;touch-action:none;image-rendering:pixelated;-webkit-interpolation-mode:nearest-neighbor}
+#GM4HTML5_loadingscreen{display:none}
+#fullscreen{position:fixed;right:12px;bottom:12px;z-index:10;padding:10px 14px;border:1px solid #ffffff88;background:#111c;color:white;border-radius:8px;font:14px Arial;cursor:pointer}
+:fullscreen .gm4html5_div_class{width:100vw;height:100vh}
+:fullscreen #canvas{width:min(100vw,177.7778vh);height:min(100vh,56.25vw)}
+</style>
+</head>
+<body>
+<div class="gm4html5_div_class" id="gm4html5_div_id">
+<img src="html5game/splash.png" id="GM4HTML5_loadingscreen" alt="GameMaker loading screen">
+<canvas id="canvas" width="960" height="540"><p>Your browser does not support HTML5 canvas.</p></canvas>
+</div>
+<button id="fullscreen" type="button">⛶ Fullscreen</button>
+<script src="${safeScript}" onerror="document.getElementById('load-error').style.display='block'"><\/script>
+<div id="load-error" style="display:none;position:fixed;inset:0;background:#000;color:white;padding:28px;font:16px Arial;z-index:20">Retro Bowl's game script could not download from the host. The host may be unavailable or blocked by your network.</div>
+<script>
+// Anti-close warning: browsers may still suppress this prompt.
+window.addEventListener("beforeunload", function(event){
+ event.preventDefault();
+ event.returnValue = "Are you sure you want to close this tab?";
+});
+document.getElementById("fullscreen").addEventListener("click",function(){
+ const target=document.documentElement;
+ if(target.requestFullscreen) target.requestFullscreen();
+ else if(target.webkitRequestFullscreen) target.webkitRequestFullscreen();
+});
+window.onload = function(){
+ if(typeof GameMaker_Init === "function") GameMaker_Init();
+ else document.getElementById("load-error").style.display="block";
+};
+<\/script>
+</body>
+</html>`);
+      gameWindow.document.close();
+      hideNotice();
+      return;
+    }
+
+    // ShuttleTV: keep the tab at about:blank by fetching its HTML and writing
+    // that document into the blank tab. No iframe and no navigation to the site URL.
+    // This requires ShuttleTV's server to allow cross-origin fetching (CORS).
+    if (game.external && game.url) {
+      let externalWindow;
+      if (game.blankTab) {
+        externalWindow = window.open("about:blank", "_blank");
+        if (!externalWindow) {
+          showNotice("Your browser blocked the new tab. Allow pop-ups for this site, then try again.");
+          return;
+        }
+        externalWindow.document.open();
+        externalWindow.document.write('<!doctype html><html><head><meta charset="utf-8"><title>Loading ShuttleTV...</title><style>body{margin:0;background:#08080d;color:#ff4968;font:16px Arial;display:grid;place-items:center;height:100vh;text-align:center;padding:24px}</style></head><body>LOADING SHUTTLETV INTO ABOUT:BLANK...</body></html>');
+        externalWindow.document.close();
+        button.disabled = true;
+        button.textContent = "LOADING...";
+        hideNotice();
+        try {
+          const response = await fetch(game.url, { cache: "no-store", mode: "cors" });
+          if (!response.ok) throw new Error("HTTP " + response.status);
+          let html = await response.text();
+          const baseTag = '<base href="' + game.url.replace(/&/g, "&amp;").replace(/"/g, "&quot;") + '">';
+          if (/<head\b[^>]*>/i.test(html)) {
+            if (!/<base\b/i.test(html)) html = html.replace(/<head\b([^>]*)>/i, '<head$1>' + baseTag);
+          } else {
+            html = '<head>' + baseTag + '</head>' + html;
+          }
+          if (!externalWindow.closed) {
+            externalWindow.document.open();
+            externalWindow.document.write(html);
+            externalWindow.document.close();
+            externalWindow.document.title = "ShuttleTV | Art Project V6";
+          }
+        } catch (error) {
+          if (!externalWindow.closed) {
+            externalWindow.document.open();
+            externalWindow.document.write('<!doctype html><html><head><meta charset="utf-8"><title>ShuttleTV could not load in about:blank</title><style>body{margin:0;padding:32px;background:#08080d;color:#f5f5f7;font:15px Arial;line-height:1.7}h2{color:#ff2448}</style></head><body><h2>SHUTTLETV COULD NOT LOAD IN ABOUT:BLANK</h2><p>The browser could not fetch the site content for display in this blank tab. ShuttleTV may block cross-origin requests, or the network may block the site.</p><p>To keep the address bar at about:blank, the site content must be fetchable by this page.</p></body></html>');
+            externalWindow.document.close();
+          }
+          showNotice("ShuttleTV could not be loaded into about:blank. The site may block cross-origin fetching.");
+        } finally {
+          button.disabled = false;
+          button.textContent = "▶  PLAY GAME";
+        }
+      } else {
+        externalWindow = window.open(game.url, "_blank", "noopener,noreferrer");
+        if (!externalWindow) showNotice("Your browser blocked the new tab. Allow pop-ups for this site, then try again.");
+        else hideNotice();
+      }
+      return;
+    }
+
+    if (!source) {
+      showNotice(game.name + " is listed, but no verified standalone HTML file was found in the catalog. " +
+        "With the no-iframe rule, an external website cannot be converted into a standalone game just by adding its URL.");
+      return;
+    }
+
+    // Open directly in the click handler so popup blockers are less likely
+    // to block the tab while the source is being fetched.
+    const gameWindow = window.open("about:blank", "_blank");
+
+    if (!gameWindow) {
+      showNotice("Your browser blocked the new tab. Allow pop-ups for this site, then try again.");
+      return;
+    }
+
+    gameWindow.document.open();
+    gameWindow.document.write(
+      '<!doctype html><html><head><title>Loading game...</title>' +
+      '<style>body{margin:0;background:#08080d;color:#ff4968;font:16px Arial;display:grid;place-items:center;height:100vh}</style>' +
+      '</head><body>CONNECTING TO GAME SERVER...' +
+      '<script>window.addEventListener("beforeunload",function(event){event.preventDefault();event.returnValue="Are you sure you want to close this tab?";});<\/script>' +
+      '</body></html>'
+    );
+    gameWindow.document.close();
+
+    // Best effort only: browsers control whether a close warning appears.
+    const warnBeforeClose = event => {
+      event.preventDefault();
+      event.returnValue = "Are you sure you want to close this tab?";
+    };
+    gameWindow.addEventListener("beforeunload", warnBeforeClose);
+
+    button.disabled = true;
+    button.textContent = "LOADING...";
+    hideNotice();
+
+    try {
+      const response = await fetch(source, {cache:"no-store"});
+      if (!response.ok) throw new Error("HTTP " + response.status);
+
+      let html = await response.text();
+
+      // A fetched XML document is not necessarily a playable HTML game.
+      const looksLikeHtml = /<html[\s>]|<!doctype\s+html|<body[\s>]/i.test(html);
+      if (!looksLikeHtml) {
+        throw new Error("The source did not return a recognizable HTML game page.");
+      }
+
+      // Install anti-close warning in the game document itself.
+      // Browser settings decide whether the native confirmation is shown.
+      const antiCloseScript = '<script>window.addEventListener("beforeunload",function(event){event.preventDefault();event.returnValue="Are you sure you want to close this tab?";});<\/script>';
+      if (/<\/body\s*>/i.test(html)) {
+        html = html.replace(/<\/body\s*>/i, antiCloseScript + '</body>');
+      } else {
+        html += antiCloseScript;
+      }
+
+      // Preserve relative asset paths by adding the source directory as base.
+      const baseUrl = new URL(".", source).href;
+      if (/<head\b[^>]*>/i.test(html)) {
+        if (!/<base\b/i.test(html)) {
+          html = html.replace(/<head\b([^>]*)>/i,
+            '<head$1><base href="' + baseUrl + '">');
+        }
+      } else {
+        html = '<base href="' + baseUrl + '">' + html;
+      }
+
+      if (gameWindow.closed) return;
+
+      gameWindow.document.open();
+      gameWindow.document.write(html);
+      gameWindow.document.close();
+      gameWindow.document.title = game.name + " | Art Project V6";
+
+      // Reinstall after writing the game document.
+      gameWindow.addEventListener("beforeunload", warnBeforeClose);
+    } catch (error) {
+      if (!gameWindow.closed) {
+        gameWindow.document.open();
+        gameWindow.document.write(
+          '<!doctype html><html><head><title>Game unavailable</title>' +
+          '<style>body{background:#08080d;color:#f5f5f7;font:15px Arial;padding:32px;line-height:1.7}' +
+          'h2{color:#ff2448}code{overflow-wrap:anywhere;color:#ff9aac}</style></head><body>' +
+          '<h2>GAME COULD NOT LOAD</h2>' +
+          '<p>This source is unavailable as a standalone browser game.</p>' +
+          '<p>Possible reasons: the file does not exist, the server blocks cross-origin requests, ' +
+          'or the source is a website rather than a standalone HTML game.</p>' +
+          '<p>Game: ' + escapeHtml(game.name) + '</p>' +
+          '<p>Source: <code>' + escapeHtml(source) + '</code></p>' +
+          '<p>Close this tab and try another game.</p>' +
+          '<script>window.addEventListener("beforeunload",function(event){event.preventDefault();event.returnValue="Are you sure you want to close this tab?";});<\/script>' +
+          '</body></html>'
+        );
+        gameWindow.document.close();
+      }
+      showNotice(game.name + " could not be loaded as a blank-tab game. The source may be missing, block cross-origin fetching, or require its original website context.");
+    } finally {
+      button.disabled = false;
+      button.textContent = "▶  PLAY GAME";
+    }
+  }
+
+  function escapeHtml(value) {
+    return String(value).replace(/[&<>"']/g, ch => ({
+      "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"
+    }[ch]));
+  }
+
+  function showNotice(message) {
+    notice.textContent = message;
+    notice.style.display = "block";
+  }
+
+  function hideNotice() {
+    notice.textContent = "";
+    notice.style.display = "none";
+  }
+
+  search.addEventListener("input", render);
+  category.addEventListener("change", render);
+  render();
+  loadCatalogAndRepairSources();
+})();
+</script>
